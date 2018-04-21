@@ -43,14 +43,22 @@ Rebase your branch on the latest upstream
 
 To keep your development branch up to date, rebase your changes on top of the current state of the upstream master.
 
-\# get the changes from upstream
+get the changes from upstream
+
 $ git fetch upstream
-\# switch to your local master branch
+
+switch to your local master branch
+
 $ git checkout master
+
 $ git rebase upstream/master
-\# switch to your topical branch
+
+switch to your topical branch
+
 $ git checkout 78359-slurlayout
-\# make sure all is committed as necessary in branch before rebasing
+
+make sure all is committed as necessary in branch before rebasing
+
 $ git rebase master
 
 Rebase will put all your commits in the branch on hold, get the last changes, and apply your commits on top of it. You might need to resolve conflicts if you changed a file that has been changed in the main repo. To do so, edit the files, then:
