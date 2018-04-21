@@ -14,7 +14,7 @@ body {
 }
 
 .card-image {
-	min-height: 70%;
+	height: 70%;
 }
 
 .modal {
