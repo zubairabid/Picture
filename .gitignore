@@ -1,8 +1,10 @@
 # DB
 app.db
+/migrations
 
 #pyc
 *.pyc
 
 #images
 /app/static/img/images/
+
