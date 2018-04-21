@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block headstuff %}
-<div class="row blue-grey darken-3 grey-text lighten-5">
+<div class="row grey darken-3 white-text z-depth-2">
   <br>
   <div class="col s12 m5">
     <img class="circle" src="{{ user.avatar(200) }}">
@@ -11,18 +11,18 @@
 
     <div class="row">
       <div class="col s4">
-        <a class="waves-effect waves-light btn red darken-4">{{ user.followers.count() }} Followers</a>
+        <a class="waves-effect waves-light btn pink">{{ user.followers.count() }} Followers</a>
       </div>
       <div class="col s4">
-        <a class="waves-effect waves-light btn red darken-4">{{ user.followed.count() }} Followed</a>
+        <a class="waves-effect waves-light btn pink">{{ user.followed.count() }} Followed</a>
       </div>
       <div class="col s4">
         {% if user == current_user %}
-        <a class="waves-effect waves-light btn red darken-4" href="{{ url_for('edit_profile') }}">Edit profile</a>
+        <a class="waves-effect waves-light btn pink" href="{{ url_for('edit_profile') }}">Edit profile</a>
         {% elif not current_user.is_following(user) %}
-        <a class="waves-effect waves-light btn red darken-4" href="{{ url_for('follow', username=user.username) }}">Follow</a>
+        <a class="waves-effect waves-light btn pink" href="{{ url_for('follow', username=user.username) }}">Follow</a>
         {% else %}
-        <a class="waves-effect waves-light btn-flat red darken-4" href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
+        <a class="waves-effect waves-light btn-flat pink accent-4" href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
         {% endif %}
       </div>
     </div>

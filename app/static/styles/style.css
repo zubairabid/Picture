@@ -1,10 +1,13 @@
 /* style="background:url('https://i.pinimg.com/originals/3b/1f/b6/3b1fb6d2de2a7814f5e9d87d63cee4c6.jpg');background-repeat: no-repeat;height: 100vh;background-size: cover; */
 body {
-	background:url('https://i.pinimg.com/originals/3b/1f/b6/3b1fb6d2de2a7814f5e9d87d63cee4c6.jpg');
+	/* background:url('https://i.pinimg.com/originals/3b/1f/b6/3b1fb6d2de2a7814f5e9d87d63cee4c6.jpg');
   background-repeat: no-repeat;
   height: 100vh;
   background-size: cover;
-  background-attachment: fixed;
+  background-attachment: fixed; */
+	/* background: linear-gradient(#2a363b, #e84a5f, #ff847c, #fecea8, #99b898); */
+	background: #a34242;
+	min-height: 100%;
 }
 
 /*Additions and modifications to the framwork*/

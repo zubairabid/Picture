@@ -1,9 +1,9 @@
 <div class = "col s12 m6 l4">
-  <div class="card hoverable medium">
+  <div class="card hoverable medium grey lighten-2">
     <div class="card-image waves-effect waves-block waves-light grey lighten-4">
       <img class="responsive-img" src="{{ post.imagelink }}">
     </div>
-    <div class="card-content grey-text text-darken-4">
+    <div class="card-content black-text">
       <i class="material-icons left"><img class="circle" src="{{ post.author.avatar(36) }}"></i>
       <a href="{{ url_for('user', username=post.author.username) }}">
         {{ post.author.username }}
@@ -12,16 +12,16 @@
 
       <p class="truncate">{{ post.body }}</p>
     </div>
-    <div class="card-action">
-      <a href="#">Like</a>
-      <a class="modal-trigger" href="#modal{{post.id}}">More</a>
+    <div class="card-action grey darken-4">
+      <a class="white-text" href="#">Like</a>
+      <a class="modal-trigger white-text" href="#modal{{post.id}}">More</a>
       <!-- <a href="#">Share</a> -->
     </div>
   </div>
 
    <!-- Modal Structure -->
    <div id="modal{{post.id}}" class="modal modal-fixed-footer">
-     <div class="modal-content">
+     <div class="modal-content grey lighten-2">
 
       <div class="modal-left valign-wrapper grey darken-4">
         <img class="responsive-img post_image" src="{{ post.imagelink }}">
@@ -31,11 +31,11 @@
          <p>{{ post.body }}</p>
        </div>
      </div>
-     <div class="modal-footer">
-       <a href="#!" class="modal-action waves-effect waves-green btn-flat left">Like</a>
-       <a href="#!" class="modal-action waves-effect waves-green btn-flat left">Comment</a>
-       <a href="#!" class="modal-action waves-effect waves-green btn-flat left">Share</a>
-       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+     <div class="modal-footer grey darken-4">
+       <a href="#!" class="modal-action waves-effect waves-green btn-flat left white-text">Like</a>
+       <a href="#!" class="modal-action waves-effect waves-green btn-flat left white-text">Comment</a>
+       <a href="#!" class="modal-action waves-effect waves-green btn-flat left white-text">Share</a>
+       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat white-text">Close</a>
      </div>
    </div>
 </div>
