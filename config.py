@@ -8,5 +8,5 @@ class Config(object):
     POSTS_PER_PAGE = 6
 
     # UPLOAD_FOLDER = basedir + 'static/img/'
-    UPLOADS_DEFAULT_DEST = basedir + 'app/static/img/'
-    UPLOADED_PHOTOS_DEST = basedir + 'app/static/img/'
+    UPLOADS_DEFAULT_DEST = basedir + '/app/static/img/'
+    UPLOADED_PHOTOS_DEST = basedir + '/app/static/img/'
