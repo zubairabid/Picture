@@ -19,7 +19,15 @@ body {
 	/* overflow-y: hidden !important; */
 }
 
-.responsive-img {
-	max-height: 80% !important;
+/* .responsive-img {
+	max-height: 100% !important;
 	width: auto !important;
+} */
+
+.modal-left {
+	width: 63%;
+	float: left;
+}
+
+.modal-right {
 }

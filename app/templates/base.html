@@ -1,9 +1,9 @@
 <html>
 <head>
 	{% if title %}
-	<title>{{ title }} - Microblog</title>
+	<title>{{ title }} - Picture.</title>
 	{% else %}
-	<title>Welcome to Microblog</title>
+	<title>Welcome to Picture.</title>
 	{% endif %}
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,6 +12,9 @@
   <!--Import materialize.css-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+
+	{% block styling %}{% endblock %}
+
 </head>
 
 <body class="grey darken-4 grey-text lighten-4">
@@ -19,7 +22,7 @@
     <nav class="blue-grey darken-4">
       <div class="nav-wrapper">
 
-        <a href="#!" class="brand-logo">IClone</a>
+        <a href=" {{ url_for('index') }} " class="brand-logo"> Picture.</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
         <ul class="right hide-on-med-and-down">

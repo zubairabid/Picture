@@ -1,5 +1,5 @@
 <div class = "col s12 m6 l4">
-  <div class="card hoverable small modal-trigger" href="#modal{{post.id}}">
+  <div class="card hoverable small">
     <div class="card-image waves-effect waves-block waves-light">
       <img class="responsive-img" src="{{ post.imagelink }}">
     </div>
@@ -11,17 +11,31 @@
         </a>
         <i class="material-icons right">more_vert</i>
       </span>
-      <p><a href="#" class="truncate">{{ post.body }}</a><br>Click for more</p>
+      <p class="truncate">{{ post.body }}</p>
+    </div>
+    <div class="card-action">
+      <a href="#">Like</a>
+      <a class="modal-trigger" href="#modal{{post.id}}">More</a>
+      <!-- <a href="#">Share</a> -->
     </div>
   </div>
 
    <!-- Modal Structure -->
-   <div id="modal{{post.id}}" class="modal">
+   <div id="modal{{post.id}}" class="modal modal-fixed-footer valign-wrapper">
      <div class="modal-content">
-       <img class="responsive-img" src="{{ post.imagelink }}">
-       <p>{{ post.body }}</p>
+
+      <div class="modal-left">
+        <img class="responsive-img" src="{{ post.imagelink }}">
+      </div>
+
+       <div class="modal-right">
+         <p>{{ post.body }}</p>
+       </div>
      </div>
      <div class="modal-footer">
+       <a href="#!" class="modal-action waves-effect waves-green btn-flat">Like</a>
+       <a href="#!" class="modal-action waves-effect waves-green btn-flat">Comment</a>
+       <a href="#!" class="modal-action waves-effect waves-green btn-flat">Share</a>
        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
      </div>
    </div>
