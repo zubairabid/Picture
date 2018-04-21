@@ -1,0 +1,25 @@
+/* style="background:url('https://i.pinimg.com/originals/3b/1f/b6/3b1fb6d2de2a7814f5e9d87d63cee4c6.jpg');background-repeat: no-repeat;height: 100vh;background-size: cover; */
+body {
+	background:url('https://i.pinimg.com/originals/3b/1f/b6/3b1fb6d2de2a7814f5e9d87d63cee4c6.jpg');
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* .postimg {
+	max-height: 100%;
+	width: auto;
+	/* max-width: 100%;
+} */
+
+.modal {
+	/* width: 75% !important ; */
+	max-height: 100% !important;
+	/* overflow-y: hidden !important; */
+}
+
+.responsive-img {
+	max-height: 80% !important;
+	width: auto !important;
+}

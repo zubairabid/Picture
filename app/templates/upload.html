@@ -1,0 +1,47 @@
+{% extends 'base.html' %}}
+
+{% block content %}
+
+<div class="row">
+    <div class="col s12 m12 l6">
+        <div class="card ">
+        <h2 class="col s12 center-align">Upload Image</h2>
+
+        <form class="row" action="" method="post" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+
+          <div class="card-content">
+            <div class="col s12">
+                {{ form.photo.label }}<br>
+                {{ form.photo }}
+                {% for error in form.photo.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+
+            </div>
+            
+            <div class="col s12">
+              {{ form.caption.label }}<br>
+              {{ form.caption(cols=32, rows=10) }}<br>
+              {% for error in form.caption.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+            </div>
+
+            <div class="col s12">
+              <br>
+                <button class="btn waves-effect">
+                  {{ form.submit() }}
+                  <!-- <i class="material-icons right">send</i> -->
+                </button>
+
+            </div>
+          </div>
+
+        </form>
+        <br>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
