@@ -7,27 +7,31 @@ body {
   background-attachment: fixed;
 }
 
-/* .postimg {
-	max-height: 100%;
-	width: auto;
-	/* max-width: 100%;
-} */
-
-.modal {
-	/* width: 75% !important ; */
-	max-height: 100% !important;
-	/* overflow-y: hidden !important; */
+/*Additions and modifications to the framwork*/
+.container {
+  margin: 0 auto;
+  width: 80%;
 }
 
-/* .responsive-img {
+.card-image {
+	min-height: 70%;
+}
+
+.modal {
 	max-height: 100% !important;
-	width: auto !important;
-} */
+}
 
 .modal-left {
+	min-height: 100%;
 	width: 63%;
 	float: left;
 }
 
 .modal-right {
+}
+
+
+/*own stuff*/
+.post_image {
+	width: 100%;
 }
