@@ -1,2 +1,8 @@
 # DB
 app.db
+
+#pyc
+*.py
+
+#images
+/app/static/img/images/
