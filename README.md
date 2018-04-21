@@ -1,29 +1,36 @@
 ITWS-2 Project
 
-Required Tools: Python 3.4+ and all packages in requirements.txt, a simple pip install should suffice for those. Use a virtualenvironment to not fuck up.
+#Required Tools: 
 
-Setup:
+Python 3.4+ and all packages in requirements.txt, a simple pip install should suffice for those. Use a virtualenvironment to not fuck up.
+
+#Setup:
+
 1. clone
 2. run the following commands:
 
 export FLASK_APP='iclone.py'
+
 flask db init
+
 flask db migrate
+
 flask db upgrade
 
-In order to run it in Debug mode (suggested for development), do export FLASK_DEBUG=1
+3. In order to run it in Debug mode (suggested for development), do export FLASK_DEBUG=1
 
-Running:
+#Running:
 flask run should do. 
 After any changes to the models, run flask db migrate and flask db upgrade again
 
 
 (borrowed from https://musescore.org/en/handbook/developers-handbook/finding-your-way-around/git-workflow . Please check that page out too)
 
-Collaborative work:
+#Collaborative work:
+
 FOR ANY modifications whatsoever, use branches
 
-Keeping your repo up to date with the main repo:
+#Keeping your repo up to date with the main repo:
 In order to get the latest updates from the main repository, do a one-time setup to establish it as a remote by entering:
 
 $ git remote add upstream git://github.com/musescore/MuseScore.git
@@ -36,14 +43,14 @@ Rebase your branch on the latest upstream
 
 To keep your development branch up to date, rebase your changes on top of the current state of the upstream master.
 
-# get the changes from upstream
+\# get the changes from upstream
 $ git fetch upstream
-# switch to your local master branch
+\# switch to your local master branch
 $ git checkout master
 $ git rebase upstream/master
-# switch to your topical branch
+\# switch to your topical branch
 $ git checkout 78359-slurlayout
-# make sure all is committed as necessary in branch before rebasing
+\# make sure all is committed as necessary in branch before rebasing
 $ git rebase master
 
 Rebase will put all your commits in the branch on hold, get the last changes, and apply your commits on top of it. You might need to resolve conflicts if you changed a file that has been changed in the main repo. To do so, edit the files, then:
