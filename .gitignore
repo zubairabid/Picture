@@ -2,7 +2,7 @@
 app.db
 
 #pyc
-*.py
+*.pyc
 
 #images
 /app/static/img/images/
