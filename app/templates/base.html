@@ -22,20 +22,20 @@
     <nav class="grey darken-4 z-depth-2">
       <div class="nav-wrapper">
 
-        <a href=" {{ url_for('index') }} " class="brand-logo"> Picture.</a>
+        <a href=" {{ url_for('index') }} " class="brand-logo waves-effect waves-red lighten-2"> Picture.</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
         <ul class="right hide-on-med-and-down">
 					{% if not current_user.is_anonymous %}
-          <li><a href = "{{ url_for('index') }}">Home</a></li>
+          <li><a href = "{{ url_for('index') }}" class="waves-effect waves-red lighten-2">Home</a></li>
 					{% endif %}
-          <li><a href="{{ url_for('explore') }}">Explore</a></li>
+          <li><a href="{{ url_for('explore') }}" class="waves-effect waves-red lighten-2">Explore</a></li>
           {% if current_user.is_anonymous %}
-          <li>  <a href="{{ url_for('login') }}">Login</a></li>
+          <li>  <a href="{{ url_for('login') }}" class="waves-effect waves-red lighten-2">Login</a></li>
           {% else %}
-          <li><a href="{{ url_for('upload') }}">Upload</a></li>
-          <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
-          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          <li><a href="{{ url_for('upload') }}" class="waves-effect waves-red lighten-2">Upload</a></li>
+          <li><a href="{{ url_for('user', username=current_user.username) }}" class="waves-effect waves-red lighten-2">Profile</a></li>
+          <li><a href="{{ url_for('logout') }}" class="waves-effect waves-red lighten-2">Logout</a></li>
           {% endif %}
         </ul>
       </div>
@@ -58,7 +58,7 @@
 	</ul>
 
 	{% block headstuff %}{% endblock %}
-	
+
   <div class="container">
     <!-- Page Content goes here -->
     {% block content %}{% endblock %}
