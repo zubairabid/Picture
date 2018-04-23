@@ -45,15 +45,17 @@
 
 
   </div>
-	<ul class="sidenav" id="mobile-demo">
-		<li><a href = "{{ url_for('index') }}">Home</a></li>
-		<li><a href="{{ url_for('explore') }}">Explore</a></li>
+	<ul class="sidenav grey darken-4" id="mobile-demo">
+		{% if not current_user.is_anonymous %}
+		<li><a href = "{{ url_for('index') }}" class="white-text waves-effect waves-red lighten-2">Home</a></li>
+		{% endif %}
+		<li><a href="{{ url_for('explore') }}" class="white-text waves-effect waves-red lighten-2">Explore</a></li>
 		{% if current_user.is_anonymous %}
-		<li>  <a href="{{ url_for('login') }}">Login</a></li>
+		<li>  <a href="{{ url_for('login') }}" class="white-text waves-effect waves-red lighten-2">Login</a></li>
 		{% else %}
-		<li><a href="{{ url_for('upload') }}">Upload</a></li>
-		<li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
-		<li><a href="{{ url_for('logout') }}">Logout</a></li>
+		<li><a href="{{ url_for('upload') }}" class="white-text waves-effect waves-red lighten-2">Upload</a></li>
+		<li><a href="{{ url_for('user', username=current_user.username) }}" class="white-text waves-effect waves-red lighten-2">Profile</a></li>
+		<li><a href="{{ url_for('logout') }}" class="white-text waves-effect waves-red lighten-2">Logout</a></li>
 		{% endif %}
 	</ul>
 

@@ -41,12 +41,14 @@ def index():
 
 
 @app.route('/explore')
+@login_required # TODO hopefully temp  until someshit fixed
 def explore():
-	page = request.args.get('page', 1, type=int)
-	posts = Post.query.order_by(Post.timestamp.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
-	next_url = url_for('explore', page=posts.next_num) if posts.has_next else None
-	prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
-	return render_template("index.html", title='Explore', posts=posts.items, next_url=next_url, prev_url=prev_url)
+    print(current_user)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('explore', page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
+    return render_template("index.html", title='Explore', posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -169,3 +171,25 @@ def unfollow(username):
     db.session.commit()
     flash('You are not following {}.'.format(username))
     return redirect(url_for('user', username=username))
+
+@app.route('/like/<pid>')
+@login_required
+def like(pid):
+    post = Post.query.filter_by(id = pid).first()
+    if post is None:
+        flash("Post not found")
+        return redirect(url_for('index'))
+    current_user.like(post)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/unlike/<pid>')
+@login_required
+def unlike(pid):
+    post = Post.query.filter_by(id = pid).first()
+    if post is None:
+        flash("Post not found")
+        return redirect(url_for('index'))
+    current_user.unlike(post)
+    db.session.commit()
+    return redirect(url_for('index'))

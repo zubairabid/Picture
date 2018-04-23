@@ -11,6 +11,10 @@ followers = db.Table('followers',
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+likes = db.Table('likes',
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -66,18 +70,39 @@ class User(UserMixin, db.Model):
         own = Post.query.filter_by(user_id=self.id)
         return own
 
+    def like(self, post):
+        if not self.liked(post):
+            post.liked.append(self)
+
+    def unlike(self, post):
+        if self.liked(post):
+            post.liked.remove(self)
+
+    def liked(self, post):
+        return post in self.likes
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     imagelink = db.Column(db.String)
-    body = db.Column(db.String(10000))
+    body = db.Column(db.String(100000))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    comments = db.relationship("Comment")
+
+    liked = db.relationship(
+        'User', secondary=likes,
+        backref=db.backref('likes', lazy='dynamic'), lazy='dynamic')
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
+class Comment(db.Model):
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key="True")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key="True")
+    comment = db.Column(db.String(100000))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user = db.relationship("User")
 
 @login.user_loader
 def load_user(id):

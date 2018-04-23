@@ -13,8 +13,12 @@
       <p class="truncate">{{ post.body }}</p>
     </div>
     <div class="card-action grey darken-4">
-      <a class="white-text waves-effect waves-red lighten-2" href="#">Like</a>
-      <a class="modal-trigger white-text waves-effect waves-red lighten-2" href="#modal{{post.id}}">More</a>
+      {% if current_user.liked(post) %}
+      <a href="{{ url_for('unlike', pid = post.id) }}" class="modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
+      {% else %}
+      <a href="{{ url_for('like', pid = post.id) }}" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
+      {% endif %}
+      <a class="modal-trigger white-text waves-effect waves-red lighten-2 btn-flat" href="#modal{{post.id}}">More</a>
       <!-- <a href="#">Share</a> -->
     </div>
   </div>
@@ -27,12 +31,16 @@
         <img class="responsive-img post_image" src="{{ post.imagelink }}">
       </div>
 
-       <div class="modal-right">
+       <div class="modal-right black-text">
          <p>{{ post.body }}</p>
        </div>
      </div>
      <div class="modal-footer grey darken-4">
-       <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Like</a>
+       {% if current_user.liked(post) %}
+       <a href="{{ url_for('unlike', pid = post.id) }}" class="modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
+       {% else %}
+       <a href="{{ url_for('like', pid = post.id) }}" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
+       {% endif %}
        <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Comment</a>
        <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Share</a>
        <a href="#!" class="modal-action modal-close waves-red lighten-2 waves-green btn-flat white-text">Close</a>
