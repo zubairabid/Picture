@@ -25,15 +25,26 @@
 
    <!-- Modal Structure -->
    <div id="modal{{post.id}}" class="modal modal-fixed-footer">
-     <div class="modal-content grey lighten-2">
+      <div class="modal-content grey lighten-2">
 
-      <div class="modal-left valign-wrapper grey darken-4">
-        <img class="responsive-img post_image" src="{{ post.imagelink }}">
-      </div>
 
-       <div class="modal-right black-text">
-         <p>{{ post.body }}</p>
-       </div>
+        <div class="row grey lighten-2">
+          <div class="col s12 m8 valign-wrapper grey darken-4 modrow">
+            <img class="responsive-img post_image" src="{{ post.imagelink }}">
+          </div>
+          <div class="col s12 m4 black-text modrow">
+            <p>{{ post.body }}</p>
+          </div>
+        </div>
+<!--
+
+        <div class="modal-left valign-wrapper grey darken-4">
+          <img class="responsive-img post_image" src="{{ post.imagelink }}">
+        </div>
+
+         <div class="modal-right black-text">
+           <p>{{ post.body }}</p>
+         </div> -->
      </div>
      <div class="modal-footer grey darken-4">
        {% if current_user.liked(post) %}

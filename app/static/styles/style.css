@@ -21,20 +21,19 @@ body {
 }
 
 .modal {
-	max-height: 100% !important;
-}
+	height: 85% !important;
+	max-height: 85% !important;
 
-.modal-left {
-	min-height: 100%;
-	width: 63%;
-	float: left;
+	width: 80% !important;
+	max-width: 80% !important;
 }
-
-.modal-right {
-}
-
 
 /*own stuff*/
+.modrow {
+	height: 100%;
+}
+
 .post_image {
 	width: 100%;
+	height: auto;
 }
