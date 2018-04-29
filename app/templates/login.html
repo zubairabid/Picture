@@ -1,45 +1,57 @@
 {% extends "base.html" %}
 
-{% block styling %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/login.css') }}"> {% endblock %}
+{% block styling %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}"> {% endblock %}
 
 {% block content %}
 <div class="row">
-    <div class="col s12 m12 l6">
-        <div class="card ">
-        <h2 class="col s12 center-align">Sign In</h2>
+    <div class="col s12 m12 l6 offset-l3">
+      <div class="card black-text grey lighten-2">
+        <div class="row">
 
-        <form class="row" action="" method="post">
-          {{ form.hidden_tag() }}
+          <h2 class="col s12 center-align">Sign In</h2>
 
-          <div class="card-content">
-            <div class="col s12">
-              {{ form.username.label }}<br>
-              {{ form.username(size=32) }}<br>
-              {% for error in form.username.errors %}
-              <span style="color: red;">[{{ error }}]</span>
-              {% endfor %}
-            </div>
-            <div class="col s12">
-              {{ form.password.label }}<br>
-              {{ form.password(size=32) }}<br>
-              {% for error in form.password.errors %}
-              <span style="color: red;">[{{ error }}]</span>
-              {% endfor %}
-            </div>
+          <form class="col s12" action="" method="post">
+            {{ form.hidden_tag() }}
 
-            <div class="col s12">
-              <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-            </div>
+            <div class="card-content">
+              <div class="row">
+                <div class="input-field col s12">
+                  <span id="username">{{ form.username(size=32) }}</span><br>
+                  <label for="username">{{ form.username.label }}<br>
+                  {% for error in form.username.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
 
-            <div class="col s12">
-              <p>{{ form.submit() }}</p>
+              <div class="row">
+                <div class="input-field col s12">
+                  <span id="password">{{ form.password(size=32) }}</span><br>
+                  <label for="password">{{ form.password.label }}</label><br>
+                  {% for error in form.password.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  {{ form.remember_me() }} {{ form.remember_me.label }}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  {{ form.submit() }}
+                </div>
+              </div>
+
             </div>
+          </form>
+
+          <div class="col s12 card-action center-align">
+            <a href="{{ url_for('register') }}">Not Registered? Click to Register</a>
           </div>
-
-        </form>
-
-        <div class="card-action center-align">
-          <a href="{{ url_for('register') }}">Not Registered? Click to Register</a>
         </div>
       </div>
     </div>

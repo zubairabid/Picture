@@ -14,9 +14,9 @@
     </div>
     <div class="card-action grey darken-4">
       {% if current_user.liked(post) %}
-      <a href="{{ url_for('unlike', pid = post.id) }}" class="modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
+      <a href="{{ url_for('unlike', pid = post.id) }}" class="unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
       {% else %}
-      <a href="{{ url_for('like', pid = post.id) }}" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
+      <a href="{{ url_for('like', pid = post.id) }}" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
       {% endif %}
       <a class="modal-trigger white-text waves-effect waves-red lighten-2 btn-flat" href="#modal{{post.id}}">More</a>
       <!-- <a href="#">Share</a> -->
@@ -48,9 +48,9 @@
      </div>
      <div class="modal-footer grey darken-4">
        {% if current_user.liked(post) %}
-       <a href="{{ url_for('unlike', pid = post.id) }}" class="modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
+       <a href="{{ url_for('unlike', pid = post.id) }}" class="unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
        {% else %}
-       <a href="{{ url_for('like', pid = post.id) }}" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
+       <a href="{{ url_for('like', pid = post.id) }}" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
        {% endif %}
        <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Comment</a>
        <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Share</a>
@@ -58,3 +58,86 @@
      </div>
    </div>
 </div>
+
+<script>
+(function() {
+  var httpRequest;
+  var liked = document.getElementsByClassName("like{{post.id}}");
+  for(var i = 0; i < liked.length; i+=1) {
+    liked[i].addEventListener("click", likeAction);
+  }
+
+  var unliked = document.getElementsByClassName("unlike{{post.id}}");
+  for(var i = 0; i < unliked.length; i+=1) {
+    unliked[i].addEventListener("click", unlikeAction);
+  }
+
+  function likeAction(event) {
+    event.preventDefault();
+    httpRequest = new XMLHttpRequest();
+    if (!httpRequest) {
+      console.log('Giving up :( Cannot create an XMLHTTP instance');
+      return false;
+    }
+    httpRequest.addEventListener('load', likeUpdate);
+    httpRequest.open('POST', {{ url_for('like', pid=post.id) | tojson }}, true);
+    httpRequest.send({{ post.id | tojson }});
+  }
+
+  function unlikeAction(event) {
+    event.preventDefault();
+    httpRequest = new XMLHttpRequest();
+    if (!httpRequest) {
+      console.log('Giving up :( Cannot create an XMLHTTP instance');
+      return false;
+    }
+    httpRequest.addEventListener('load', unlikeUpdate);
+    httpRequest.open('POST', {{ url_for('unlike', pid=post.id) | tojson }}, true);
+    httpRequest.send({{ post.id | tojson }});
+  }
+
+  function likeUpdate() {
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      if (httpRequest.status === 200) {
+        // alert("YAy");
+        var data = JSON.parse(this.responseText);
+
+        // Dealing with likes
+        var span = document.getElementsByClassName('like{{post.id}}');
+        for(var i = 0; i < span.length; i+=1) {
+          span[i].innerText = data.result;
+          span[i].setAttribute('href', '{{ url_for("unlike", pid = post.id) }}')
+          span[i].className = "unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2";
+          console.log("data : " + data.result);
+        }
+      }
+      else {
+        console.log('There was a problem with the request.');
+      }
+    }
+  }
+
+  function unlikeUpdate() {
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      if (httpRequest.status === 200) {
+        // alert("YAy");
+        var data = JSON.parse(this.responseText);
+
+        // Dealing with unlikes
+        var span = document.getElementsByClassName('unlike{{post.id}}');
+        for(var i = 0; i < span.length; i+=1) {
+          span[i].innerText = data.result;
+          span[i].setAttribute('href', '{{ url_for("like", pid = post.id) }}')
+          span[i].setAttribute('class', 'like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text');
+          console.log("data : " + data.result);
+        }
+
+      }
+      else {
+        console.log('There was a problem with the request.');
+      }
+    }
+  }
+
+})();
+</script>

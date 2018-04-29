@@ -6,11 +6,12 @@ import os
 from app import app, db, photos
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, UnregistrationForm
 from app.models import User, Post
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 from datetime import datetime
+
 
 # sets the last seen. Updates before every request made by the user
 @app.before_request
@@ -121,7 +122,7 @@ def unfollow(username):
     flash('You are not following {}.'.format(username))
     return redirect(url_for('user', username=username))
 
-@app.route('/like/<pid>')
+@app.route('/like/<pid>', methods=['GET', 'POST'])
 @login_required
 def like(pid):
     post = Post.query.filter_by(id = pid).first()
@@ -130,9 +131,9 @@ def like(pid):
         return redirect(url_for('index'))
     current_user.like(post)
     db.session.commit()
-    return redirect(url_for('index'))
+    return jsonify(result=(str(post.liked.count()) + " Unlike"))
 
-@app.route('/unlike/<pid>')
+@app.route('/unlike/<pid>', methods=['GET', 'POST'])
 @login_required
 def unlike(pid):
     post = Post.query.filter_by(id = pid).first()
@@ -141,7 +142,7 @@ def unlike(pid):
         return redirect(url_for('index'))
     current_user.unlike(post)
     db.session.commit()
-    return redirect(url_for('index'))
+    return jsonify(result=(str(post.liked.count()) + " Like"))
 
 
 # Logins and user management
