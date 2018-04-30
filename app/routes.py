@@ -5,7 +5,7 @@
 import os
 from app import app, db, photos
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, UnregistrationForm
-from app.models import User, Post
+from app.models import User, Post, Comment
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -140,6 +140,35 @@ def comment():
     db.session.commit()
     return jsonify(userId = current_user.id, comment = text)
 
+@app.route('/uncomment/<cid>', methods=['GET', 'POST'])
+@login_required
+def uncomment(cid):
+    comment = Comment.query.filter_by(timestamp=cid).first()
+    if comment is None:
+        flash("Comment not found")
+        return redirect(url_for('index'))
+
+    if comment.user_id != current_user.id:
+        return redirect(url_for('index'))
+
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/unpost/<pid>', methods=['GET', 'POST'])
+@login_required
+def unpost(pid):
+    post = Post.query.filter_by(id = pid).first()
+    if post is None:
+        flash("Post not found")
+        return redirect(url_for('index'))
+
+    if post.user_id != current_user.id:
+        return redirect(url_for('index'))
+
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('index'))
 
 @app.route('/like', methods=['POST'])
 @login_required
@@ -221,6 +250,11 @@ def unregister():
 
         for user in current_user.followed.all():
             current_user.unfollow(user)
+
+        for comment in Comment.query.all():
+            if comment.user_id == current_user.id:
+                db.session.delete(comment)
+
         db.session.commit()
         db.session.delete(current_user)
         db.session.commit()

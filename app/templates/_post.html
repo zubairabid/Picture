@@ -8,8 +8,9 @@
       <a href="{{ url_for('user', username=post.author.username) }}">
         {{ post.author.username }}
       </a>
-      <i class="material-icons right">more_vert</i>
-
+      {% if post.user_id == current_user.id %}
+      <a href="{{ url_for('unpost', pid=post.id) }}" class="right">Delete Post</a>
+      {% endif %}
       <p class="truncate">{{ post.body | safe}}</p>
     </div>
     <div class="card-action grey darken-4">
@@ -46,6 +47,9 @@
                 <tr>
                   <td> {{comment.user_id}} </td>
                   <td> {{comment.comment | safe}} </td>
+                  {% if comment.user_id == current_user.id %}
+                  <td> <a href="{{ url_for('uncomment', cid=comment.timestamp) }}" class="right">Delete Comment</a> </td>
+                  {% endif %}
                 </tr>
                 {% endfor %}
               </tbody>

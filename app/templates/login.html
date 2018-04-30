@@ -16,8 +16,8 @@
             <div class="card-content">
               <div class="row">
                 <div class="input-field col s12">
-                  <span id="username">{{ form.username(size=32) }}</span><br>
-                  <label for="username">{{ form.username.label }}<br>
+                  {{ form.username.label }}<br>
+                  {{ form.username(size=32) }}<br>
                   {% for error in form.username.errors %}
                   <span style="color: red;">[{{ error }}]</span>
                   {% endfor %}
@@ -26,8 +26,8 @@
 
               <div class="row">
                 <div class="input-field col s12">
-                  <span id="password">{{ form.password(size=32) }}</span><br>
-                  <label for="password">{{ form.password.label }}</label><br>
+                  {{ form.password.label }}<br>
+                  {{ form.password(size=32) }}<br>
                   {% for error in form.password.errors %}
                   <span style="color: red;">[{{ error }}]</span>
                   {% endfor %}
