@@ -1,0 +1,71 @@
+<script>
+function exec(pid, func) {
+
+  if(func == 1) {
+    like();
+  }
+  else if(func == 2) {
+    unlike();
+  }
+  else if(func == 3) {
+    rcomment();
+  }
+
+  function like() {
+    console.log("About to like the post : " + pid)
+    // ev.preventDefault();
+    $.ajax({
+      method: 'POST',
+      url: {{ url_for('like') | tojson }},
+      data: {
+        'post_id' : pid
+      }
+    }).done(likeShow);
+  }
+  function likeShow(data) {
+    console.log("marking like on " + pid)
+    $('.like'+pid).text(data.result);
+    $('.like'+pid).attr({
+      class : "unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2",
+      onclick : "exec({{post.id}}, 2)"
+    });
+  }
+
+  function unlike() {
+    console.log("About to unlike the post : " + pid)
+    // ev.preventDefault();
+    $.ajax({
+      method: 'POST',
+      url: {{ url_for('unlike') | tojson }},
+      data: {
+        'post_id' : pid
+      }
+    }).done(unlikeShow);
+  }
+  function unlikeShow(data) {
+    console.log("marking unlike on " + pid)
+    $('.unlike'+pid).text(data.result);
+    $('.unlike'+pid).attr({
+      class : "like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text",
+      onclick : "exec({{post.id}}, 1)"
+    });
+  }
+
+
+  function rcomment() {
+    console.log("Generic Commenting on " + pid)
+    $.ajax({
+      method: 'POST',
+      url: {{ url_for('comment') | tojson }},
+      data: {
+        'post_id' : pid
+      }
+    }).done(commentShow);
+  }
+  function commentShow(data) {
+    console.log("marking comment on " + pid)
+    $('.comment'+pid).append("<tr><td>"+data.userId + "</td><td>" + data.comment + "</td></tr>");
+  }
+
+}
+</script>

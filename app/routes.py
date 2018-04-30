@@ -74,6 +74,7 @@ def upload():
 
     return render_template('upload.html', form=form)
 
+
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -122,9 +123,26 @@ def unfollow(username):
     flash('You are not following {}.'.format(username))
     return redirect(url_for('user', username=username))
 
-@app.route('/like/<pid>', methods=['GET', 'POST'])
+
+@app.route('/comment', methods=['POST'])
 @login_required
-def like(pid):
+def comment():
+    pid = request.form.get("post_id")
+    post = Post.query.filter_by(id = pid).first()
+    if post is None:
+        flash("Post not found")
+        return redirect(url_for('index'))
+
+    text = "generic comment text"
+    post.comment(current_user, text)
+    db.session.commit()
+    return jsonify(userId = current_user.id, comment = text)
+
+
+@app.route('/like', methods=['POST'])
+@login_required
+def like():
+    pid = request.form.get("post_id")
     post = Post.query.filter_by(id = pid).first()
     if post is None:
         flash("Post not found")
@@ -133,9 +151,10 @@ def like(pid):
     db.session.commit()
     return jsonify(result=(str(post.liked.count()) + " Unlike"))
 
-@app.route('/unlike/<pid>', methods=['GET', 'POST'])
+@app.route('/unlike', methods=['POST'])
 @login_required
-def unlike(pid):
+def unlike():
+    pid = request.form.get("post_id")
     post = Post.query.filter_by(id = pid).first()
     if post is None:
         flash("Post not found")

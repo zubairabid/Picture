@@ -14,9 +14,9 @@
     </div>
     <div class="card-action grey darken-4">
       {% if current_user.liked(post) %}
-      <a href="{{ url_for('unlike', pid = post.id) }}" class="unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
+      <a onclick="exec({{post.id}}, 2)" class="unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
       {% else %}
-      <a href="{{ url_for('like', pid = post.id) }}" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
+      <a onclick="exec({{post.id}}, 1)" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
       {% endif %}
       <a class="modal-trigger white-text waves-effect waves-red lighten-2 btn-flat" href="#modal{{post.id}}">More</a>
       <!-- <a href="#">Share</a> -->
@@ -34,33 +34,38 @@
           </div>
           <div class="col s12 m4 black-text modrow">
             <p>{{ post.body }}</p>
+            <table class="striped">
+              <tbody class="comment{{post.id}}">
+                {% for comment in post.comments %}
+                <tr>
+                  <td> {{comment.user_id}} </td>
+                  <td> {{comment.comment}} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
-<!--
 
-        <div class="modal-left valign-wrapper grey darken-4">
-          <img class="responsive-img post_image" src="{{ post.imagelink }}">
-        </div>
-
-         <div class="modal-right black-text">
-           <p>{{ post.body }}</p>
-         </div> -->
      </div>
      <div class="modal-footer grey darken-4">
        {% if current_user.liked(post) %}
-       <a href="{{ url_for('unlike', pid = post.id) }}" class="unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
+       <a onclick="exec({{post.id}}, 2)" class="unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
        {% else %}
-       <a href="{{ url_for('like', pid = post.id) }}" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
+       <a onclick="exec({{post.id}}, 1)" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
        {% endif %}
-       <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Comment</a>
+       <a onclick="exec({{post.id}}, 3)" class="commie{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Comment</a>
        <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Share</a>
        <a href="#!" class="modal-action modal-close waves-red lighten-2 waves-green btn-flat white-text">Close</a>
      </div>
    </div>
 </div>
 
-<script>
-(function() {
+{% include '_postscript.html' %}
+
+<!-- <script>
+boo()
+function boo() {
   var httpRequest;
   var liked = document.getElementsByClassName("like{{post.id}}");
   for(var i = 0; i < liked.length; i+=1) {
@@ -72,14 +77,35 @@
     unliked[i].addEventListener("click", unlikeAction);
   }
 
-  function likeAction(event) {
+  var commie = document.getElementsByClassName("commie{{post.id}}");
+  for(var i = 0; i < commie.legth; i+=1) {
+    commie[i].addEventListener("click", randomCommie);
+  }
+
+  function randomCommie(event) {
     event.preventDefault();
+    console.log("eventings");
     httpRequest = new XMLHttpRequest();
     if (!httpRequest) {
       console.log('Giving up :( Cannot create an XMLHTTP instance');
       return false;
     }
-    httpRequest.addEventListener('load', likeUpdate);
+    httpRequest.addEventListener('click', commentUpdate);
+    httpRequest.open('POST', {{ url_for('comment', pid=post.id) | tojson }}, true);
+    httpRequest.send({{ post.id | tojson }});
+    console.log("posted a comment")
+  }
+
+
+  function likeAction(event) {
+    event.preventDefault();
+    console.log("console working");
+    httpRequest = new XMLHttpRequest();
+    if (!httpRequest) {
+      console.log('Giving up :( Cannot create an XMLHTTP instance');
+      return false;
+    }
+    httpRequest.addEventListener('click', likeUpdate);
     httpRequest.open('POST', {{ url_for('like', pid=post.id) | tojson }}, true);
     httpRequest.send({{ post.id | tojson }});
   }
@@ -91,12 +117,13 @@
       console.log('Giving up :( Cannot create an XMLHTTP instance');
       return false;
     }
-    httpRequest.addEventListener('load', unlikeUpdate);
+    httpRequest.addEventListener('click', unlikeUpdate);
     httpRequest.open('POST', {{ url_for('unlike', pid=post.id) | tojson }}, true);
     httpRequest.send({{ post.id | tojson }});
   }
 
   function likeUpdate() {
+    console.log("+++++++")
     if (httpRequest.readyState === XMLHttpRequest.DONE) {
       if (httpRequest.status === 200) {
         // alert("YAy");
@@ -139,5 +166,25 @@
     }
   }
 
-})();
-</script>
+  function commentUpdate() {
+    console.log("AAAAAh")
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      if (httpRequest.status === 200) {
+        // alert("YAy");
+        var data = JSON.parse(this.responseText);
+
+        // Dealing with likes
+        var span = document.getElementsByClassName('comment{{post.id}}');
+        for(var i = 0; i < span.length; i+=1) {
+          span[i].innerText = data.comment ;
+          console.log("Added a comment: " + data.comment)
+        }
+      }
+      else {
+        console.log('There was a problem with the request.');
+      }
+    }
+  }
+  boo();
+}
+</script> -->

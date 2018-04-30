@@ -81,6 +81,7 @@ class User(UserMixin, db.Model):
     def liked(self, post):
         return post in self.likes
 
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -97,11 +98,20 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
+    def comment(self, user, comment):
+        commie = Comment()
+        commie.comment = comment
+        commie.user_id = user.id
+        commie.post_id = self.id
+        self.comments.append(commie)
+        db.session.commit()
+
+
 class Comment(db.Model):
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key="True")
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key="True")
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comment = db.Column(db.String(100000))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow, primary_key=True)
     user = db.relationship("User")
 
 @login.user_loader
