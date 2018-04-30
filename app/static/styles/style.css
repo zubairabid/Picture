@@ -28,6 +28,11 @@ body {
 	max-width: 80% !important;
 }
 
+tr {
+	max-width: 100% !important;
+	overflow-wrap: break-word;
+}
+
 /*own stuff*/
 .modrow {
 	height: 100%;

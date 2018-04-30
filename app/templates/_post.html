@@ -34,6 +34,12 @@
           </div>
           <div class="col s12 m4 black-text modrow">
             <p>{{ post.body }}</p>
+
+
+            <input type="text" class="input-field inline black-text" id="commIn{{post.id}}"/>
+            <input type="button" value="Comment" onclick="exec({{post.id}}, 3)" id="commButt{{post.id}}" class="waves-effect waves-red lighten-1 btn-flat left red lighten-2 black-text">
+
+
             <table class="striped black-text">
               <tbody class="comment{{post.id}}">
                 {% for comment in post.comments %}
@@ -54,137 +60,10 @@
        {% else %}
        <a onclick="exec({{post.id}}, 1)" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
        {% endif %}
-       <a onclick="exec({{post.id}}, 3)" class="commie{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Comment</a>
-       <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Share</a>
+       <!-- <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Share</a> -->
        <a href="#!" class="modal-action modal-close waves-red lighten-2 waves-green btn-flat white-text">Close</a>
      </div>
    </div>
 </div>
 
 {% include '_postscript.html' %}
-
-<!-- <script>
-boo()
-function boo() {
-  var httpRequest;
-  var liked = document.getElementsByClassName("like{{post.id}}");
-  for(var i = 0; i < liked.length; i+=1) {
-    liked[i].addEventListener("click", likeAction);
-  }
-
-  var unliked = document.getElementsByClassName("unlike{{post.id}}");
-  for(var i = 0; i < unliked.length; i+=1) {
-    unliked[i].addEventListener("click", unlikeAction);
-  }
-
-  var commie = document.getElementsByClassName("commie{{post.id}}");
-  for(var i = 0; i < commie.legth; i+=1) {
-    commie[i].addEventListener("click", randomCommie);
-  }
-
-  function randomCommie(event) {
-    event.preventDefault();
-    console.log("eventings");
-    httpRequest = new XMLHttpRequest();
-    if (!httpRequest) {
-      console.log('Giving up :( Cannot create an XMLHTTP instance');
-      return false;
-    }
-    httpRequest.addEventListener('click', commentUpdate);
-    httpRequest.open('POST', {{ url_for('comment', pid=post.id) | tojson }}, true);
-    httpRequest.send({{ post.id | tojson }});
-    console.log("posted a comment")
-  }
-
-
-  function likeAction(event) {
-    event.preventDefault();
-    console.log("console working");
-    httpRequest = new XMLHttpRequest();
-    if (!httpRequest) {
-      console.log('Giving up :( Cannot create an XMLHTTP instance');
-      return false;
-    }
-    httpRequest.addEventListener('click', likeUpdate);
-    httpRequest.open('POST', {{ url_for('like', pid=post.id) | tojson }}, true);
-    httpRequest.send({{ post.id | tojson }});
-  }
-
-  function unlikeAction(event) {
-    event.preventDefault();
-    httpRequest = new XMLHttpRequest();
-    if (!httpRequest) {
-      console.log('Giving up :( Cannot create an XMLHTTP instance');
-      return false;
-    }
-    httpRequest.addEventListener('click', unlikeUpdate);
-    httpRequest.open('POST', {{ url_for('unlike', pid=post.id) | tojson }}, true);
-    httpRequest.send({{ post.id | tojson }});
-  }
-
-  function likeUpdate() {
-    console.log("+++++++")
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-      if (httpRequest.status === 200) {
-        // alert("YAy");
-        var data = JSON.parse(this.responseText);
-
-        // Dealing with likes
-        var span = document.getElementsByClassName('like{{post.id}}');
-        for(var i = 0; i < span.length; i+=1) {
-          span[i].innerText = data.result;
-          span[i].setAttribute('href', '{{ url_for("unlike", pid = post.id) }}')
-          span[i].className = "unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2";
-          console.log("data : " + data.result);
-        }
-      }
-      else {
-        console.log('There was a problem with the request.');
-      }
-    }
-  }
-
-  function unlikeUpdate() {
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-      if (httpRequest.status === 200) {
-        // alert("YAy");
-        var data = JSON.parse(this.responseText);
-
-        // Dealing with unlikes
-        var span = document.getElementsByClassName('unlike{{post.id}}');
-        for(var i = 0; i < span.length; i+=1) {
-          span[i].innerText = data.result;
-          span[i].setAttribute('href', '{{ url_for("like", pid = post.id) }}')
-          span[i].setAttribute('class', 'like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text');
-          console.log("data : " + data.result);
-        }
-
-      }
-      else {
-        console.log('There was a problem with the request.');
-      }
-    }
-  }
-
-  function commentUpdate() {
-    console.log("AAAAAh")
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-      if (httpRequest.status === 200) {
-        // alert("YAy");
-        var data = JSON.parse(this.responseText);
-
-        // Dealing with likes
-        var span = document.getElementsByClassName('comment{{post.id}}');
-        for(var i = 0; i < span.length; i+=1) {
-          span[i].innerText = data.comment ;
-          console.log("Added a comment: " + data.comment)
-        }
-      }
-      else {
-        console.log('There was a problem with the request.');
-      }
-    }
-  }
-  boo();
-}
-</script> -->

@@ -8,7 +8,7 @@ function exec(pid, func) {
     unlike();
   }
   else if(func == 3) {
-    rcomment();
+    comment();
   }
 
   function like() {
@@ -51,14 +51,18 @@ function exec(pid, func) {
     });
   }
 
+  function comment() {
+    console.log("Specific Commenting on " + pid)
 
-  function rcomment() {
-    console.log("Generic Commenting on " + pid)
+    var comment = $("#commIn"+pid).val();
+    $("#commIn"+pid).val("");
+
     $.ajax({
       method: 'POST',
       url: {{ url_for('comment') | tojson }},
       data: {
-        'post_id' : pid
+        'post_id' : pid,
+        'comment' : comment
       }
     }).done(commentShow);
   }

@@ -25,11 +25,11 @@ def before_request():
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-	page = request.args.get('page', 1, type=int)
-	posts = current_user.followed_posts().paginate(page, app.config['POSTS_PER_PAGE'], False)
-	next_url = url_for('index', page=posts.next_num) if posts.has_next else None
-	prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
-	return render_template('index.html', title='Home', posts=posts.items, next_url=next_url, prev_url=prev_url)
+    page = request.args.get('page', 1, type=int)
+    posts = current_user.followed_posts().paginate(page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('index', page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
+    return render_template('index.html', title='Home', posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 
 @app.route('/explore')
@@ -133,7 +133,7 @@ def comment():
         flash("Post not found")
         return redirect(url_for('index'))
 
-    text = "generic comment text"
+    text = request.form.get("comment") or "generic comment text"
     post.comment(current_user, text)
     db.session.commit()
     return jsonify(userId = current_user.id, comment = text)
