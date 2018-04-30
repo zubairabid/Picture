@@ -26,8 +26,8 @@ function exec(pid, func) {
     console.log("marking like on " + pid)
     $('.like'+pid).text(data.result);
     $('.like'+pid).attr({
-      class : "unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2",
-      onclick : "exec({{post.id}}, 2)"
+      class : "unlike" + pid + " modal-action waves-effect waves-white btn-flat left red-text lighten-2",
+      onclick : "exec(" + pid + ", 2)"
     });
   }
 
@@ -46,8 +46,8 @@ function exec(pid, func) {
     console.log("marking unlike on " + pid)
     $('.unlike'+pid).text(data.result);
     $('.unlike'+pid).attr({
-      class : "like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text",
-      onclick : "exec({{post.id}}, 1)"
+      class : "like" + pid + " modal-action waves-effect waves-red lighten-2 btn-flat left white-text",
+      onclick : "exec(" + pid + ", 1)"
     });
   }
 
