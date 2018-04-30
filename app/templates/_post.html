@@ -10,7 +10,7 @@
       </a>
       <i class="material-icons right">more_vert</i>
 
-      <p class="truncate">{{ post.body }}</p>
+      <p class="truncate">{{ post.body | safe}}</p>
     </div>
     <div class="card-action grey darken-4">
       {% if current_user.liked(post) %}
@@ -33,7 +33,7 @@
             <img class="responsive-img post_image" src="{{ post.imagelink }}">
           </div>
           <div class="col s12 m4 black-text modrow">
-            <p>{{ post.body }}</p>
+            <p>{{ post.body | safe }}</p>
 
 
             <input type="text" class="input-field inline black-text" id="commIn{{post.id}}"/>
@@ -45,7 +45,7 @@
                 {% for comment in post.comments %}
                 <tr>
                   <td> {{comment.user_id}} </td>
-                  <td> {{comment.comment}} </td>
+                  <td> {{comment.comment | safe}} </td>
                 </tr>
                 {% endfor %}
               </tbody>

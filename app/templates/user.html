@@ -7,7 +7,7 @@
   </div>
   <div class="col s12 m7">
     <h1> {{ user.username }} </h1>
-    {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+    {% if user.about_me %}<p>{{ user.about_me | safe}}</p>{% endif %}
 
     <div class="row">
       <div class="col s4">

@@ -11,6 +11,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from app.custom import tagger
 
 
 # sets the last seen. Updates before every request made by the user
@@ -66,7 +67,7 @@ def upload():
         image = form.photo.data
         filename = photos.save(image)
         file_url = photos.url(filename)
-        post = Post(body=form.caption.data, imagelink=file_url ,author = current_user)
+        post = Post(body=tagger(form.caption.data), imagelink=file_url ,author = current_user)
         db.session.add(post)
         db.session.commit()
         flash('Uploaded your image!')
@@ -81,7 +82,7 @@ def edit_profile():
     form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
-        current_user.about_me = form.about_me.data
+        current_user.about_me = tagger(form.about_me.data)
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('edit_profile'))
@@ -134,6 +135,7 @@ def comment():
         return redirect(url_for('index'))
 
     text = request.form.get("comment") or "generic comment text"
+    text = tagger(text)
     post.comment(current_user, text)
     db.session.commit()
     return jsonify(userId = current_user.id, comment = text)
