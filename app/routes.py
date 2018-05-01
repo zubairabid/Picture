@@ -59,6 +59,16 @@ def user(username):
                            next_url=next_url, prev_url=prev_url)
 
 
+@app.route('/notifications')
+@login_required
+def notifications(user_id):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        return redirect(url_for('index'))
+
+    user.ncount = 0
+    return None
+
 # User actions - photo upload, profile edit, etc
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -105,6 +115,11 @@ def follow(username):
         flash('You cannot follow yourself!')
         return redirect(url_for('user', username=username))
     current_user.follow(user)
+
+    user.ncount = (user.ncount or 0) + 1
+    user.hreflink = '#'
+    user.notify(current_user.username + ' has followed you!')
+
     db.session.commit()
     flash('You are following {}!'.format(username))
     return redirect(url_for('user', username=username))
@@ -137,6 +152,12 @@ def comment():
     text = request.form.get("comment") or "generic comment text"
     text = tagger(text)
     post.comment(current_user, text)
+
+    user = User.query.filter_by(id=post.user_id).first()
+    user.ncount = user.ncount + 1
+    user.hreflink = '#'
+    user.notify(current_user.username + ' has commented on your post')
+
     db.session.commit()
     return jsonify(userId = current_user.id, comment = text)
 
@@ -179,6 +200,13 @@ def like():
         flash("Post not found")
         return redirect(url_for('index'))
     current_user.like(post)
+
+    user = User.query.filter_by(id=post.user_id).first()
+    print("Post user found : " + str(user.id))
+    user.ncount = (user.ncount or 0) + 1
+    user.hreflink = '#'
+    user.notify(current_user.username + ' has liked your post')
+
     db.session.commit()
     return jsonify(result=(str(post.liked.count()) + " Unlike"))
 

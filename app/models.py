@@ -26,6 +26,8 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
+    ncount = db.Column(db.Integer, default=0)
+
     posts = db.relationship('Post', cascade="all,delete", backref='author', lazy='dynamic')
 
     followed = db.relationship(
@@ -33,6 +35,8 @@ class User(UserMixin, db.Model):
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+
+    notifications = db.relationship('Notifications')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -81,6 +85,12 @@ class User(UserMixin, db.Model):
     def liked(self, post):
         return post in self.likes
 
+    def notify(self, notif):
+        n = Notifications()
+        n.user_id = self.id
+        n.notif = notif
+        self.notifications.append(n)
+        db.session.commit()
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -108,11 +118,17 @@ class Post(db.Model):
 
 
 class Comment(db.Model):
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comment = db.Column(db.String(100000))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow, primary_key=True)
     user = db.relationship("User")
+
+
+class Notifications(db.Model):
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    notif = db.Column(db.String(1000))
 
 @login.user_loader
 def load_user(id):
