@@ -85,12 +85,18 @@ class User(UserMixin, db.Model):
     def liked(self, post):
         return post in self.likes
 
-    def notify(self, notif):
+    def notify(self, notif, hreflink):
         n = Notifications()
         n.user_id = self.id
         n.notif = notif
+        n.hreflink = hreflink
+        print(hreflink + " " + n.hreflink)
         self.notifications.append(n)
         db.session.commit()
+
+    def noti(self):
+        return self.notifications[::-1]
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -129,6 +135,7 @@ class Notifications(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     notif = db.Column(db.String(1000))
+    hreflink = db.Column(db.String(1000))
 
 @login.user_loader
 def load_user(id):

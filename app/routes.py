@@ -63,7 +63,7 @@ def user(username):
 def post(pid):
     post = Post.query.filter_by(id=pid).first_or_404()
     return render_template('post.html', post=post)
-    
+
 @app.route('/notifications')
 @login_required
 def notifications(user_id):
@@ -122,8 +122,9 @@ def follow(username):
     current_user.follow(user)
 
     user.ncount = (user.ncount or 0) + 1
-    user.hreflink = '#'
-    user.notify(current_user.username + ' has followed you!')
+    link = url_for('user', username=current_user.username)
+    print(link)
+    user.notify(notif=(current_user.username + ' has followed you!'), hreflink=link)
 
     db.session.commit()
     flash('You are following {}!'.format(username))
@@ -160,8 +161,9 @@ def comment():
 
     user = User.query.filter_by(id=post.user_id).first()
     user.ncount = user.ncount + 1
-    user.hreflink = '#'
-    user.notify(current_user.username + ' has commented on your post')
+    link = url_for('post', pid=pid)
+    print(link)
+    user.notify(notif=(current_user.username + ' has commented on your post'), hreflink=link)
 
     db.session.commit()
     return jsonify(userId = current_user.id, comment = text)
@@ -209,8 +211,9 @@ def like():
     user = User.query.filter_by(id=post.user_id).first()
     print("Post user found : " + str(user.id))
     user.ncount = (user.ncount or 0) + 1
-    user.hreflink = '#'
-    user.notify(current_user.username + ' has liked your post')
+    link = url_for('post', pid=pid)
+    print(link)
+    user.notify(notif=(current_user.username + ' has liked your post'), hreflink=link)
 
     db.session.commit()
     return jsonify(result=(str(post.liked.count()) + " Unlike"))

@@ -38,7 +38,7 @@
 					{% endif %}
 					<ul id='nots' class='dropdown-content notif'>
 
-						{% for notification in current_user.notifications %}
+						{% for notification in current_user.noti() %}
 						<li class="notification"><a class="" href={{notification.hreflink}} >{{notification.notif}}</a></li>
 						<li class="divider notification" tabindex="-1"></li>
 						{% endfor %}
