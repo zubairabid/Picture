@@ -77,11 +77,7 @@
 
   <div class="container">
     <!-- Page Content goes here -->
-		<div class="fixed-action-btn left">
-			<a class="btn-floating btn-small grey darken-4">
-				<i class="small material-icons">arrow_drop_down</i>
-			</a>
-		</div>
+
     {% block content %}{% endblock %}
 		{% if not current_user.is_anonymous %}
 		<div class="fixed-action-btn">

@@ -3,16 +3,16 @@
 {% block content %}
 
 <div class="row black-text">
-    <div class="col s12 m12 l6">
-        <div class="card grey lighten-2">
-        <h2 class="col s12 center-align">Register</h2>
+    <div class="col s12 m12 l6 offset-l3">
+        <div class="card grey darken-4">
+        <h2 class="col s12 center-align white-text">Register</h2>
 
         <form class="row" action="" method="post">
           {{ form.hidden_tag() }}
 
-          <div class="card-content">
+          <div class="card-content white-text">
             <div class="col s12">
-              {{ form.username.label }}<br>
+               Username <br>
               {{ form.username(size=32) }}<br>
               {% for error in form.username.errors %}
               <span style="color: red;">[{{ error }}]</span>
@@ -20,15 +20,14 @@
             </div>
 
             <div class="col s12">
-              {{ form.email.label }}<br>
+              Email<br>
               {{ form.email(size=32) }}<br>
               {% for error in form.email.errors %}
               <span style="color: red;">[{{ error }}]</span>
               {% endfor %}
             </div>
-
             <div class="col s12">
-              {{ form.password.label }}<br>
+              Password<br>
               {{ form.password(size=32) }}<br>
               {% for error in form.password.errors %}
               <span style="color: red;">[{{ error }}]</span>
@@ -36,7 +35,7 @@
             </div>
 
             <div class="col s12">
-              {{ form.password2.label }}<br>
+              Password Repeat<br>
               {{ form.password2(size=32) }}<br>
               {% for error in form.password2.errors %}
               <span style="color: red;">[{{ error }}]</span>
