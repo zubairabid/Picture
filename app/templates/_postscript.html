@@ -68,7 +68,7 @@ function exec(pid, func) {
   }
   function commentShow(data) {
     console.log("marking comment on " + pid)
-    $('.comment'+pid).append("<tr><td>"+data.userId + "</td><td>" + data.comment + "</td></tr>");
+    $('.comment'+pid).append("<tr><td>"+data.user + "</td><td>" + data.comment + "</td><td></td></tr>");
   }
 
 }

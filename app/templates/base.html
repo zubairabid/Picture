@@ -39,7 +39,11 @@
 					<ul id='nots' class='dropdown-content notif'>
 
 						{% for notification in current_user.noti() %}
-						<li class="notification"><a class="" href={{notification.hreflink}} >{{notification.notif}}</a></li>
+							{% if current_user.ncount > 0 %}
+							<li class="notification"><a class="" href={{notification.hreflink}} >{{notification.notif}}</a></li>
+							{% else %}
+							<li class="notification"><a class="" href={{notification.hreflink}} >{{notification.notif}}</a></li>
+							{% endif %}
 						<li class="divider notification" tabindex="-1"></li>
 						{% endfor %}
 

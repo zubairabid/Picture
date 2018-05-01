@@ -30,25 +30,38 @@
 
 
         <div class="row grey lighten-2">
-          <div class="col s12 m8 valign-wrapper grey darken-4 modrow">
+          <div class="col s12 m8 grey lighten-2 modrow">
             <img class="responsive-img post_image" src="{{ post.imagelink }}">
           </div>
           <div class="col s12 m4 black-text modrow">
+            <i class="material-icons left"><img class="circle" src="{{ post.author.avatar(36) }}"></i>
+            <a href="{{ url_for('user', username=post.author.username) }}">
+              {{ post.author.username }}
+            </a>
             <p>{{ post.body | safe }}</p>
+            <br>
+
+            <div class="row">
+              <div class="col s8">
+                <input type="text" class="input-field inline black-text" id="commIn{{post.id}}"/>
+              </div>
+              <div class="col s4">
+                <input type="button" value="Comment" onclick="exec({{post.id}}, 3)" id="commButt{{post.id}}" class="white-text">
+              </div>
+            </div>
 
 
-            <input type="text" class="input-field inline black-text" id="commIn{{post.id}}"/>
-            <input type="button" value="Comment" onclick="exec({{post.id}}, 3)" id="commButt{{post.id}}" class="waves-effect waves-red lighten-1 btn-flat left red lighten-2 black-text">
-
-
+            <br>
             <table class="striped black-text">
               <tbody class="comment{{post.id}}">
                 {% for comment in post.comments %}
                 <tr>
-                  <td> {{comment.user_id}} </td>
+                  <td> {{comment.user.username}} </td>
                   <td> {{comment.comment | safe}} </td>
                   {% if comment.user_id == current_user.id %}
-                  <td> <a href="{{ url_for('uncomment', cid=comment.timestamp) }}" class="right">Delete Comment</a> </td>
+                  <td> <a href="{{ url_for('uncomment', cid=comment.timestamp) }}" class="right">Delete</a> </td>
+                  {% else %}
+                  <td></td>
                   {% endif %}
                 </tr>
                 {% endfor %}

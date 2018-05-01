@@ -166,7 +166,7 @@ def comment():
     user.notify(notif=(current_user.username + ' has commented on your post'), hreflink=link)
 
     db.session.commit()
-    return jsonify(userId = current_user.id, comment = text)
+    return jsonify(user = current_user.username, comment = text)
 
 @app.route('/uncomment/<cid>', methods=['GET', 'POST'])
 @login_required

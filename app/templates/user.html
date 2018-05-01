@@ -10,13 +10,13 @@
     {% if user.about_me %}<p>{{ user.about_me | safe}}</p>{% endif %}
 
     <div class="row">
-      <div class="col s4">
-        <a class="waves-effect waves-light btn red lighten-2">{{ user.followers.count() }} Followers</a>
+      <div class="col l3 m4 s6">
+        <a class="modal-trigger waves-effect waves-light btn red lighten-2" href="#modals{{user.id}}">{{ user.followers.count() }} Followers</a>
       </div>
-      <div class="col s4">
-        <a class="waves-effect waves-light btn red lighten-2">{{ user.followed.count() }} Followed</a>
+      <div class="col l3 m4 s6">
+        <a class="modal-trigger waves-effect waves-light btn red lighten-2" href="#modald{{user.id}}">{{ user.followed.count() }} Followed</a>
       </div>
-      <div class="col s4">
+      <div class="col l3 m4 s6">
         {% if user == current_user %}
         <a class="waves-effect waves-light btn red lighten-2" href="{{ url_for('edit_profile') }}">Edit profile</a>
         {% elif not current_user.is_following(user) %}
@@ -25,11 +25,43 @@
         <a class="waves-effect waves-light btn-flat red" href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
         {% endif %}
       </div>
+      <div class="col l3 m4 s6">
+        {% if user == current_user %}
+        <a class="waves-effect waves-light btn red lighten-2" href="{{ url_for('unregister') }}">Delete Account</a>
+        {% endif %}
+      </div>
     </div>
     <br>
   </div>
   <br>
 </div>
+
+<div id="modals{{user.id}}" class="modal modal-fixed-footer">
+ <div class="modal-content grey lighten-2">
+  <table class="striped black-text">
+   {% for user in user.followers.all() %}
+    <tr><td> {{ user.username }} </td></tr>
+   {% endfor %}
+  </table>
+ </div>
+ <div class="modal-footer grey darken-4">
+   <a href="#!" class="modal-action modal-close waves-red lighten-2 waves-green btn-flat white-text">Close</a>
+ </div>
+</div>
+
+<div id="modald{{user.id}}" class="modal modal-fixed-footer">
+  <div class="modal-content grey lighten-2">
+    <table class="striped black-text">
+      {% for user in user.followed.all() %}
+        <tr><td> {{ user.username }} </td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="modal-footer grey darken-4">
+    <a href="#!" class="modal-action modal-close waves-red lighten-2 waves-green btn-flat white-text">Close</a>
+  </div>
+</div>
+
 {% endblock %}
 {% block content %}
 
