@@ -297,3 +297,12 @@ def unregister():
         return redirect(url_for('login'))
 
     return render_template('unregister.html', title='Unregister', form=form)
+
+# @app.route('/search/', methods=['GET', 'POST'])
+# def search():
+#     name = request.form.get('name')
+#     user = User.query.filter_by(username=name).first()
+#     if user is None:
+#         return 'found no user'
+#
+#     return return jsonify(r='found a user')

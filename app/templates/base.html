@@ -39,12 +39,9 @@
 					<ul id='nots' class='dropdown-content notif'>
 
 						{% for notification in current_user.noti() %}
-							{% if current_user.ncount > 0 %}
+							{{ current_user.ncountdown() }}
 							<li class="notification"><a class="" href={{notification.hreflink}} >{{notification.notif}}</a></li>
-							{% else %}
-							<li class="notification"><a class="" href={{notification.hreflink}} >{{notification.notif}}</a></li>
-							{% endif %}
-						<li class="divider notification" tabindex="-1"></li>
+							<li class="divider notification" tabindex="-1"></li>
 						{% endfor %}
 
 				  </ul>
@@ -53,7 +50,7 @@
           {% if current_user.is_anonymous %}
           <li>  <a href="{{ url_for('login') }}" class="waves-effect waves-red lighten-2">Login</a></li>
           {% else %}
-          <li><a href="{{ url_for('upload') }}" class="waves-effect waves-red lighten-2">Upload</a></li>
+          <!-- <li><a href="{{ url_for('upload') }}" class="waves-effect waves-red lighten-2">Upload</a></li> -->
           <li><a href="{{ url_for('user', username=current_user.username) }}" class="waves-effect waves-red lighten-2">Profile</a></li>
           <li><a href="{{ url_for('logout') }}" class="waves-effect waves-red lighten-2">Logout</a></li>
           {% endif %}
@@ -80,7 +77,19 @@
 
   <div class="container">
     <!-- Page Content goes here -->
+		<div class="fixed-action-btn left">
+			<a class="btn-floating btn-small grey darken-4">
+				<i class="small material-icons">arrow_drop_down</i>
+			</a>
+		</div>
     {% block content %}{% endblock %}
+		{% if not current_user.is_anonymous %}
+		<div class="fixed-action-btn">
+		  <a class="btn-floating btn-large grey darken-4" href="{{ url_for('upload') }}">
+		    <i class="large material-icons">add</i>
+		  </a>
+		</div>
+		{% endif %}
   </div>
 
 

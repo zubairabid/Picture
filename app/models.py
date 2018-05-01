@@ -97,6 +97,12 @@ class User(UserMixin, db.Model):
     def noti(self):
         return self.notifications[::-1]
 
+    def ncountdown(self):
+        self.ncount = 0
+        print("Reduced notification count for user to " + str(self.ncount))
+        db.session.commit()
+        return self.ncount
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

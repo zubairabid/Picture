@@ -9,7 +9,16 @@
         {{ post.author.username }}
       </a>
       {% if post.user_id == current_user.id %}
-      <a href="{{ url_for('unpost', pid=post.id) }}" class="right">Delete Post</a>
+      <!--<a href="{{ url_for('unpost', pid=post.id) }}" class="right">Delete Post</a>-->
+        <a class='black-text dropdown-trigger right' href='#' data-target='dropdown{{post.id}}'><i class="material-icons">more_vert</i></a>
+        <ul id='dropdown{{post.id}}' class='dropdown-content'>
+          <li><a href="{{ url_for('unpost', pid=post.id) }}" class="black-text waves-effect waves-block waves-red">Delete Post</a></li>
+        </ul>
+      {% else %}
+        <a class='black-text dropdown-trigger right' href='#' data-target='dropdown2'><i class="material-icons">more_vert</i></a>
+        <ul id='dropdown2' class='dropdown-content'>
+          <li><a href="#" class="black-text waves-effect waves-block waves-black">No actions available</a></li>
+        </ul>
       {% endif %}
       <p class="truncate">{{ post.body | safe}}</p>
     </div>
@@ -59,7 +68,7 @@
                   <td> {{comment.user.username}} </td>
                   <td> {{comment.comment | safe}} </td>
                   {% if comment.user_id == current_user.id %}
-                  <td> <a href="{{ url_for('uncomment', cid=comment.timestamp) }}" class="right">Delete</a> </td>
+                  <td> <a href="{{ url_for('uncomment', cid=comment.timestamp) }}" class="right"><i class="material-icons red-text">remove_circle</i></a> </td>
                   {% else %}
                   <td></td>
                   {% endif %}
