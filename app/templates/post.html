@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card hoverable grey lighten-2">
+  <div class="waves-effect waves-block waves-red lighten-2 grey lighten-4">
+    <img class="responsive-img" src="{{ post.imagelink }}" style="width: 100%;">
+  </div>
+  <div class="card-content black-text">
+    <i class="material-icons left"><img class="circle" src="{{ post.author.avatar(36) }}"></i>
+    <a href="{{ url_for('user', username=post.author.username) }}">
+      {{ post.author.username }}
+    </a>
+    {% if post.user_id == current_user.id %}
+    <a href="{{ url_for('unpost', pid=post.id) }}" class="right">Delete Post</a>
+    {% endif %}
+    <p>{{ post.body | safe}}</p>
+
+    <input type="text" class="input-field inline black-text" id="commIn{{post.id}}"/>
+    <input type="button" value="Comment" onclick="exec({{post.id}}, 3)" id="commButt{{post.id}}" class="waves-effect waves-red lighten-1 btn-flat left red lighten-2 black-text">
+
+
+    <table class="striped black-text">
+      <tbody class="comment{{post.id}}">
+        {% for comment in post.comments %}
+        <tr>
+          <td> {{comment.user_id}} </td>
+          <td> {{comment.comment | safe}} </td>
+          {% if comment.user_id == current_user.id %}
+          <td> <a href="{{ url_for('uncomment', cid=comment.timestamp) }}" class="right">Delete Comment</a> </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+  </div>
+  <div class="card-action grey darken-4">
+    {% if current_user.liked(post) %}
+    <a onclick="exec({{post.id}}, 2)" class="unlike{{post.id}} modal-action waves-effect waves-white btn-flat left red-text lighten-2">{{ post.liked.count() }} UnLike</a>
+    {% else %}
+    <a onclick="exec({{post.id}}, 1)" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
+    {% endif %}
+    <a class="modal-trigger white-text waves-effect waves-red lighten-2 btn-flat" href="#modal{{post.id}}">More</a>
+    <!-- <a href="#">Share</a> -->
+  </div>
+</div>
+
+{% include '_postscript.html' %}
+{% endblock %}

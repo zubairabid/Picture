@@ -58,7 +58,12 @@ def user(username):
     return render_template('user.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url)
 
-
+@app.route('/post/<pid>')
+@login_required
+def post(pid):
+    post = Post.query.filter_by(id=pid).first_or_404()
+    return render_template('post.html', post=post)
+    
 @app.route('/notifications')
 @login_required
 def notifications(user_id):

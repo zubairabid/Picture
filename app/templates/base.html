@@ -31,8 +31,11 @@
 					{% if not current_user.is_anonymous %}
           <li><a href = "{{ url_for('index') }}" class="waves-effect waves-red lighten-2">Home</a></li>
 					<li><a href="{{ url_for('explore') }}" class="waves-effect waves-red lighten-2">Explore</a></li>
+					{% if current_user.ncount == 0 %}
+					<li><a class='dropdown-trigger btn-flat grey darken-4 waves-effect waves-red' href='#' data-target='nots'>{{current_user.ncount}}</a></li>
+					{% else %}
 					<li><a class='dropdown-trigger btn red lighten-2 waves-effect waves-red' href='#' data-target='nots'>{{current_user.ncount}}</a></li>
-
+					{% endif %}
 					<ul id='nots' class='dropdown-content notif'>
 
 						{% for notification in current_user.notifications %}

@@ -65,6 +65,7 @@
        <a onclick="exec({{post.id}}, 1)" class="like{{post.id}} modal-action waves-effect waves-red lighten-2 btn-flat left white-text">{{ post.liked.count() }} Like</a>
        {% endif %}
        <!-- <a href="#!" class="modal-action waves-effect waves-red lighten-2 btn-flat left white-text">Share</a> -->
+       <a href="{{ url_for('post', pid=post.id) }}" class="modal-action waves-red lighten-2 waves-green btn-flat white-text">Open post in a new tab</a>
        <a href="#!" class="modal-action modal-close waves-red lighten-2 waves-green btn-flat white-text">Close</a>
      </div>
    </div>
