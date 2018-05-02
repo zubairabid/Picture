@@ -27,30 +27,31 @@
         <a href=" {{ url_for('index') }} " class="brand-logo waves-effect waves-red lighten-2"> Picture.</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 				<ul class="right">
-
-					{% if current_user.ncount == 0 %}
-					<li><a class='dropdown-trigger btn-flat grey darken-4 waves-effect waves-red white-text' href='#' data-target='nots'>{{current_user.ncount}}</a></li>
-					{% else %}
-					<li><a class='dropdown-trigger btn red lighten-2 waves-effect waves-red' href='#' data-target='nots'>{{current_user.ncount}}</a></li>
+					{% if not current_user.is_anonymous %}
+						{% if current_user.ncount == 0 %}
+						<li><a class='dropdown-trigger btn-flat grey darken-4 waves-effect waves-red white-text' href='#' data-target='nots'>{{current_user.ncount}}</a></li>
+						{% else %}
+						<li><a class='dropdown-trigger btn red lighten-2 waves-effect waves-red' href='#' data-target='nots'>{{current_user.ncount}}</a></li>
+						{% endif %}
+						<!--<ul id='nots' class='dropdown-content notif'>-->
+						<ul id='nots' class='dropdown-content grey darken-4 white-text'>
+							{% for notification in current_user.noti() %}
+								{% if current_user.ncount > 0 %}
+								<li class="notification"><a class="red-text" href={{notification.hreflink}} >{{notification.notif}}</a></li>
+								{% else %}
+								<li class="notification"><a class="white-text" href={{notification.hreflink}} >{{notification.notif}}</a></li>
+								{% endif %}
+								<li class="divider notification grey darken-4" tabindex="-1"></li>
+								{{ current_user.ncountdown() }}
+							{% endfor %}
+					  </ul>
 					{% endif %}
-					<!--<ul id='nots' class='dropdown-content notif'>-->
-					<ul id='nots' class='dropdown-content grey darken-4 white-text'>
-						{% for notification in current_user.noti() %}
-							{% if current_user.ncount > 0 %}
-							<li class="notification"><a class="red-text" href={{notification.hreflink}} >{{notification.notif}}</a></li>
-							{% else %}
-							<li class="notification"><a class="white-text" href={{notification.hreflink}} >{{notification.notif}}</a></li>
-							{% endif %}
-							<li class="divider notification" tabindex="-1"></li>
-							{{ current_user.ncountdown() }}
-						{% endfor %}
-				  </ul>
-
 				</ul>
         <ul class="right hide-on-med-and-down">
 					{% if not current_user.is_anonymous %}
           <li><a href = "{{ url_for('index') }}" class="waves-effect waves-red lighten-2">Home</a></li>
 					<li><a href="{{ url_for('explore') }}" class="waves-effect waves-red lighten-2">Explore</a></li>
+					<li><a href="{{ url_for('search') }}" class="waves-effect waves-red lighten-2">Search</a></li>
 
 					{% endif %}
           {% if current_user.is_anonymous %}

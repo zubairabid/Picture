@@ -298,11 +298,23 @@ def unregister():
 
     return render_template('unregister.html', title='Unregister', form=form)
 
-# @app.route('/search/', methods=['GET', 'POST'])
-# def search():
-#     name = request.form.get('name')
-#     user = User.query.filter_by(username=name).first()
-#     if user is None:
-#         return 'found no user'
-#
-#     return return jsonify(r='found a user')
+@app.route('/searchrun/', methods=['GET', 'POST'])
+def search():
+
+    if request.method == 'POST':
+
+        name = request.form.get('Search')
+        print('search: got name ' + str(name))
+        userlist = []
+        allu = User.query.all()
+        for u in allu:
+            if str(name) in u.username:
+                userlist.append(u)
+                print('appended ' + str(u) + ' to userlist')
+
+        if len(userlist) == 0:
+            return render_template('search.html')
+        else:
+            return render_template('searchperson.html', users=userlist)
+
+    return render_template('search.html')

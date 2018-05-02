@@ -1,9 +1,14 @@
 {% extends "base.html" %}
-{% block headstuff %}
-<div class="row grey darken-3 white-text z-depth-2">
+
+{% block content %}
+<br>
+<h1>Search result:</h1>
+{% for user in users %}
+<br>
+<div class="row grey darken-3 white-text">
   <br>
-  <div class="col s12 m3 offset-s3 valign-wrapper">
-    <img class="circle" src="{{ user.avatar(150) }}">
+  <div class="col s12 m3 valign-wrapper">
+  <img src="{{ user.avatar(150) }}">
   </div>
   <div class="col s12 m9">
     <h1> {{ user.username }} </h1>
@@ -32,49 +37,9 @@
       </div>
     </div>
     <br>
+    <br>
+    <br>
+    <br>
   </div>
-  <br>
-</div>
-
-<div id="modals{{user.id}}" class="modal modal-fixed-footer">
- <div class="modal-content grey lighten-2">
-  <table class="striped black-text">
-   {% for user in user.followers.all() %}
-    <tr><td> {{ user.username }} </td></tr>
-   {% endfor %}
-  </table>
- </div>
- <div class="modal-footer grey darken-4">
-   <a href="#!" class="modal-action modal-close waves-red lighten-2 waves-green btn-flat white-text">Close</a>
- </div>
-</div>
-
-<div id="modald{{user.id}}" class="modal modal-fixed-footer">
-  <div class="modal-content grey lighten-2">
-    <table class="striped black-text">
-      {% for user in user.followed.all() %}
-        <tr><td> {{ user.username }} </td></tr>
-      {% endfor %}
-    </table>
-  </div>
-  <div class="modal-footer grey darken-4">
-    <a href="#!" class="modal-action modal-close waves-red lighten-2 waves-green btn-flat white-text">Close</a>
-  </div>
-</div>
-
-{% endblock %}
-{% block content %}
-
-  <br>
-
-
-
-  <div class="row">
-    {% for post in posts %}
-      {% include '_post.html' %}
-    {% endfor %}
-  </div>
-
-  {% include '_pagination.html' %}
-
+{% endfor %}
 {% endblock %}

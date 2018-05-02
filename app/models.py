@@ -100,8 +100,8 @@ class User(UserMixin, db.Model):
     def ncountdown(self):
         if self.ncount > 0:
             self.ncount -= 1
-        print("Reduced notification count for user to " + str(self.ncount))
-        db.session.commit()
+            print("Reduced notification count for user to " + str(self.ncount))
+            db.session.commit()
         return ''
 
 
