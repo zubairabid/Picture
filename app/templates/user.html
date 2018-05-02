@@ -36,11 +36,12 @@
   <br>
 </div>
 
-<div id="modals{{user.id}}" class="modal modal-fixed-footer">
+<div id="modals{{user.id}}" class="modal modal-fixed-footer modalf">
  <div class="modal-content grey lighten-2">
+   <h3 class="grey-text darken-4">Users following</h3>
   <table class="striped black-text">
    {% for user in user.followers.all() %}
-    <tr><td> {{ user.username }} </td></tr>
+    <tr><td> <a href="http://localhost:5000/user/{{user.username}}" class="black-text"> {{user.username}} </a> </td></tr>
    {% endfor %}
   </table>
  </div>
@@ -49,11 +50,12 @@
  </div>
 </div>
 
-<div id="modald{{user.id}}" class="modal modal-fixed-footer">
+<div id="modald{{user.id}}" class="modal modal-fixed-footer modalf">
   <div class="modal-content grey lighten-2">
+    <h3 class="grey-text darken-4">Users followed</h3>
     <table class="striped black-text">
       {% for user in user.followed.all() %}
-        <tr><td> {{ user.username }} </td></tr>
+        <tr><td> <a href="http://localhost:5000/user/{{user.username}}" class="black-text"> {{user.username}} </a> </td></tr>
       {% endfor %}
     </table>
   </div>

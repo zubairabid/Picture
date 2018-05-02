@@ -28,6 +28,10 @@ body {
 	max-width: 80% !important;
 }
 
+.modalf {
+	width: 50% !important;
+}
+
 tr {
 	max-width: 100% !important;
 	overflow-wrap: break-word;
