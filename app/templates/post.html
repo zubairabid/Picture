@@ -39,7 +39,7 @@
       <tbody class="comment{{post.id}}">
         {% for comment in post.comments %}
         <tr>
-          <td> {{comment.user.username}} </td>
+          <td> <strong><a href="http://localhost:5000/user/{{comment.user.username}}" class="black-text"> {{comment.user.username}} </a><strong></td>
           <td> {{comment.comment | safe}} </td>
           {% if comment.user_id == current_user.id %}
           <td> <a href="{{ url_for('uncomment', cid=comment.timestamp) }}" class="right"><i class="material-icons red-text">remove_circle</i></a> </td>

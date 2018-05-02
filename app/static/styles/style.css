@@ -43,6 +43,10 @@ tr {
 	height: auto;
 }
 
-.notif {
-	width: .5vw;
+#nots {
+	width: 300px !important;
+}
+
+.notification {
+	width: 100%;
 }
