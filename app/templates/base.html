@@ -42,8 +42,8 @@
 							<li class="notification"><a class="white-text" href={{notification.hreflink}} >{{notification.notif}}</a></li>
 							{% endif %}
 							<li class="divider notification" tabindex="-1"></li>
+							{{ current_user.ncountdown() }}
 						{% endfor %}
-						{{ current_user.ncountdown() }}
 				  </ul>
 
 				</ul>

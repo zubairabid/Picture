@@ -102,7 +102,7 @@ class User(UserMixin, db.Model):
             self.ncount -= 1
         print("Reduced notification count for user to " + str(self.ncount))
         db.session.commit()
-        return self.ncount
+        return ''
 
 
 class Post(db.Model):
