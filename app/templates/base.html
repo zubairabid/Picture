@@ -34,12 +34,16 @@
 					<li><a class='dropdown-trigger btn red lighten-2 waves-effect waves-red' href='#' data-target='nots'>{{current_user.ncount}}</a></li>
 					{% endif %}
 					<!--<ul id='nots' class='dropdown-content notif'>-->
-					<ul id='nots' class='dropdown-content'>
+					<ul id='nots' class='dropdown-content grey darken-4 white-text'>
 						{% for notification in current_user.noti() %}
-							{{ current_user.ncountdown() }}
-							<li class="notification"><a class="black-text" href={{notification.hreflink}} >{{notification.notif}}</a></li>
+							{% if current_user.ncount > 0 %}
+							<li class="notification"><a class="red-text" href={{notification.hreflink}} >{{notification.notif}}</a></li>
+							{% else %}
+							<li class="notification"><a class="white-text" href={{notification.hreflink}} >{{notification.notif}}</a></li>
+							{% endif %}
 							<li class="divider notification" tabindex="-1"></li>
 						{% endfor %}
+						{{ current_user.ncountdown() }}
 				  </ul>
 
 				</ul>

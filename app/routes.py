@@ -100,11 +100,13 @@ def edit_profile():
         current_user.about_me = tagger(form.about_me.data)
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_profile'))
+        return redirect(url_for('index'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
-    return redirect(url_for('index'))
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
+
+
 
 
 @app.route('/follow/<username>')
